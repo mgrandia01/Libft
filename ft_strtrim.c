@@ -12,12 +12,10 @@
 
 #include "libft.h"
 
-int	ft_find(char const *s1, char const *set, int order)
+int	ft_find(char const *s1, char const *set, int order, int i)
 {
-	int	i;
 	int	j;
 
-	i = 0;
 	j = 0;
 	if (order != 0)
 		i = ft_strlen(s1) - 1;
@@ -52,8 +50,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	if (!s1 || !set)
 		return (NULL);
-	f_pos = ft_find(s1, set, 0);
-	l_pos = ft_find(s1, set, 1);
+	f_pos = ft_find(s1, set, 0, 0);
+	l_pos = ft_find(s1, set, 1, 0);
 	i = 0;
 	ptr = (char *)malloc((l_pos - f_pos) + 2 * sizeof(char));
 	if (!ptr)
