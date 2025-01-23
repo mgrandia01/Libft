@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-int	ft_find(char const *s1, char const *set, int order, int i)
+int	ft_find(char const *s1, char const *set, int order, size_t i)
 {
-	int	j;
+	size_t	j;
 
 	j = 0;
 	if (order != 0)

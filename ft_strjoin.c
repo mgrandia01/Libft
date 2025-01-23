@@ -14,9 +14,9 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		i;
-	int		j;
-	char	*ptr;
+	size_t		i;
+	size_t		j;
+	char		*ptr;
 
 	i = 0;
 	j = 0;
