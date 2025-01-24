@@ -80,23 +80,16 @@ char	**ft_fillstr(char const *s, char c, char **ptr, int i)
 	{
 		if (s[i] == c || s[i + 1] == '\0')
 		{
-			if (i > first)
+			if (i > first || (s[i] != c && s[i + 1] == '\0' && s[i - 1] == c))
 			{
-				if (s[i] != c && s[i + 1] == '\0')
+				if ((s[i] != c && s[i + 1] == '\0'))
 					i++;
 				ptr[word] = ft_strword(s, i, first);
 				if (!ptr[word])
 					return (ft_split_free(ptr));
 				word ++;
-				if (s[i - 1] != c && s[i] == '\0') //perque no sumi dos vegades i al final i dongui error
+				if (s[i - 1] != c && s[i] == '\0')
 					i--;
-			}
-			else if (s[i] != c && s[i + 1] == '\0' && s[i - 1] == c)
-			{
-				ptr[word] = ft_strword(s, i + 1, first);
-				if (!ptr[word])
-					return (ft_split_free(ptr));
-				word ++;
 			}
 			first = i + 1;
 		}
@@ -108,11 +101,11 @@ char	**ft_fillstr(char const *s, char c, char **ptr, int i)
 char	**ft_split(char const *s, char c)
 {
 	char	**ptr;
-	
+
 	ptr = (char **)malloc((ft_countwords(s, c) + 1) * sizeof(char *));
 	if (!ptr)
 		return (NULL);
-	ft_fillstr(s,c,ptr,0);
-	ptr[ft_countwords(s,c)] = NULL;
+	ft_fillstr(s, c, ptr, 0);
+	ptr[ft_countwords(s, c)] = NULL;
 	return (ptr);
 }
