@@ -12,7 +12,6 @@
 
 #include "libft.h"
 
-
 int	ft_countwords(char const *s, char c)
 {
 	int	count;
@@ -22,7 +21,6 @@ int	ft_countwords(char const *s, char c)
 	count = 0;
 	in_word = 0;
 	i = 0;
-
 	while (s[i] != '\0')
 	{
 		if (s[i] == c)
@@ -37,85 +35,84 @@ int	ft_countwords(char const *s, char c)
 	return (count);
 }
 
-void	ft_split_free(char **ptr)
+char	**ft_split_free(char **ptr)
 {
 	int	i;
 
 	if (!ptr)
-		return ;
+		return (NULL);
 	i = 0;
-
 	while (ptr[i])
 	{
 		free (ptr[i]);
 		i++;
 	}
 	free(ptr);
+	return (NULL);
+}
+
+char	*ft_strword(char const *s, int i, int first)
+{
+	int		k;
+	char	*word;
+
+	word = (char *)malloc((i - first + 1) * sizeof(char));
+	if (!word)
+		return (NULL);
+	k = first;
+	while (k < i)
+	{
+		word[k - first] = s[k];
+		k ++;
+	}
+	word[k - first] = '\0';
+	return (word);
+}
+
+char	**ft_fillstr(char const *s, char c, char **ptr, int i)
+{
+	int		first;
+	int		word;
+
+	first = 0;
+	word = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c || s[i + 1] == '\0')
+		{
+			if (i > first)
+			{
+				if (s[i] != c && s[i + 1] == '\0')
+					i++;
+				ptr[word] = ft_strword(s, i, first);
+				if (!ptr[word])
+					return (ft_split_free(ptr));
+				word ++;
+				if (s[i - 1] != c && s[i] == '\0') //perque no sumi dos vegades i al final i dongui error
+					i--;
+			}
+			else if (s[i] != c && s[i + 1] == '\0' && s[i - 1] == c)
+			{
+				ptr[word] = ft_strword(s, i + 1, first);
+				if (!ptr[word])
+					return (ft_split_free(ptr));
+				word ++;
+			}
+			first = i + 1;
+		}
+		i ++;
+	}
+	return (ptr);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**ptr;
-	int	i;
-	int	first;
-	int 	word;
-	int	k;
-
-	ptr = (char **)malloc((ft_countwords(s,c)+1)*sizeof(char *));
+	
+	ptr = (char **)malloc((ft_countwords(s, c) + 1) * sizeof(char *));
 	if (!ptr)
-	{
-		free (ptr);
 		return (NULL);
-	}
-	i = 0;
-	first = 0;
-	word = 0;
-	k = 0;
-
-	while (s[i] != '\0')
-	{
-		if (s[i] == c || s[i+1] == '\0')
-		{
-			if (i > first)
-			{
-				if (s[i] != c && s[i+1] == '\0')
-					i++;
-				ptr[word] = (char *)malloc(( i - first +1)*sizeof(char));//sizeof -last
-				if (!ptr[word])
-				{
-					ft_split_free(ptr);
-					return (NULL);
-				}
-				k = first;
-				while (k < i)
-				{
-					ptr[word][k - first] = s[k];
-					k ++;
-				}
-				ptr[word][k-first] = '\0';
-				word ++;
-				if (s[i-1] != c && s[i] == '\0')//perque no sumi dos vegades i al final i dongui error
-					i--;
-
-			}
-			else if (s[i] != c && s[i+1] == '\0' && s[i-1] == c)
-			{
-			  i++;	
-				ptr[word] = (char *)malloc(( i - first +1)*sizeof(char));
-				k = first;
-				while (k < i)
-				{
-					ptr[word][k - first] = s[k];
-					k ++;
-				}
-				ptr[word][i-first] = '\0';
-				word ++;
-				i--;
-			}
-			first = i+1;	
-		}
-		i ++;
-	}
-	ptr[word] = NULL;
+	ft_fillstr(s,c,ptr,0);
+	ptr[ft_countwords(s,c)] = NULL;
 	return (ptr);
 }
