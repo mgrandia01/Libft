@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-int	ft_convert(const char *nptr, int i)
+static int	ft_convert(const char *nptr, int i)
 {
 	int	n;
 	int	res;

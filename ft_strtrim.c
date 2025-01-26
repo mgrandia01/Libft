@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_find(char const *s1, char const *set, int order, size_t i)
+static int	ft_find(char const *s1, char const *set, int order, size_t i)
 {
 	size_t	j;
 

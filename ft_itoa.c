@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_lenint(int n)
+static int	ft_lenint(int n)
 {
 	int			i;
 	long int	num;
