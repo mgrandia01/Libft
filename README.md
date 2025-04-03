@@ -1,4 +1,4 @@
-Libft - Librería Personal
+Libft
 
 Libft es un proyecto de la escuela 42 que consiste en recrear algunas de las funciones más importantes de C. El objetivo es implementar estas funciones de manera personalizada para poder utilizarlas en otros proyectos a lo largo del curso.
 
